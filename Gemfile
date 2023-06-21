@@ -64,3 +64,7 @@ gem 'mini_magick'
 gem 'faker'
 
 gem 'rexml'
+
+gem 'net-smtp'
+gem 'net-imap'
+gem 'net-pop'
