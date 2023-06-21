@@ -1,28 +1,62 @@
 class PostsController < ApplicationController
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
+
   def index
     @posts = Post.all
   end
 
   def new
-    @post = Post.new
+    if params[:back]
+      @post = Post.new(post_params)
+    else
+      @post = Post.new
+    end
   end
 
   def create
-    @post = Post.create(post_params)
-    if @post.save
-    redirect_to new_post_path, notice: "ポストされました！"
-    else
+    @post = current_user.posts.build(post_params)
+    if params[:back]
       render :new
+    else
+      if @post.save
+        redirect_to posts_path, notice: "ポストされました！"
+      else
+        render :new
+      end
     end
   end
 
   def show
-    @post = Post.find(params[:id])
+  end
+
+  def edit
+  end
+
+  def update
+    if @post.update(post_params)
+      redirect_to posts_path, notice: "ポストを編集しました！"
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @post.destroy
+    redirect_to posts_path, notice:"ポストを削除しました！"
+  end
+
+  def confirm
+    @post = current_user.posts.build(post_params)
+    render :new if @post.invalid?
   end
 
   private
 
   def post_params
-    params.require(:post).permit(:image, :content)
+    params.require(:post).permit(:image, :image_cache, :content)
+  end
+
+  def set_post
+    @post = Post.find(params[:id])
   end
 end
