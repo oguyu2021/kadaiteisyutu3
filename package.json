@@ -17,6 +17,6 @@
     "webpack-dev-server": "^3"
   },
   "engines": {
-    "nede": "16.x"
+    "node": "16.x"
   }
 }
