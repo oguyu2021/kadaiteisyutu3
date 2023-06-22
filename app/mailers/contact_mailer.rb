@@ -1,7 +1,7 @@
-class ContactMailer < ApplicationMailer
-  def contact_mail(contact)
-    @contact = contact
+class PostMailer < ApplicationMailer
+  def post_mail(post)
+    @post = post
 
-    mail to: @contact.email, subject: "お問い合わせの確認メール"
+    mail to: @post.email, subject: "お問い合わせの確認メール"
   end
 end
