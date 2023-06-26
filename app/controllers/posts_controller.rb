@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user, only: [:edit, :update]
 
   def index
     @posts = Post.all
@@ -19,7 +20,7 @@ class PostsController < ApplicationController
       render :new
     else
       if @post.save
-        PostMailer.post_mail(@post).deliver 
+        PostMailer.confirmation_email(@post).deliver 
         redirect_to posts_path, notice: "ポストされました！"
       else
         render :new
@@ -36,7 +37,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to posts_path, notice: "ポストを編集しました！"
+      redirect_to @post.user, notice: "ポストを編集しました！"
     else
       render :edit
     end
@@ -57,10 +58,14 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:image, :image_cache, :content)
+    params.require(:post).permit(:content, :image, :image_cache)
   end
 
   def set_post
     @post = Post.find(params[:id])
+  end
+
+  def authorize_user
+    redirect_to root_path, alert: "Access denied." unless @post.user == current_user
   end
 end

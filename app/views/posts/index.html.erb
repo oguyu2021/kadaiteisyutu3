@@ -11,10 +11,17 @@
   </tr>
 
 <% @posts.each do |post| %>
+  <div class="post">
+    <h2><%= post.title %></h2>
+    <p><%= post.content %></p>
+    <% if post.user == current_user %>
+      <%= link_to "Edit", edit_post_path(post) %>
+    <% end %>
+  </div>
   <tr>
     <td><%= post.user.name %></td>
     <td><%= post.content %></td>
-    <td><%= image_tag post.image.url %></td>
+    <td><%= image_tag post.image.url if post.image.present? %></td>
     <td><%= link_to '詳細を確認する', post_path(post.id) %></td>
     <td><%= link_to "編集する", edit_post_path(post.id), data: { confirm: '本当に編集していいですか？' }  %></td>
     <td><%= link_to '削除する', post_path(post.id), method: :delete, method: :delete ,data: { confirm: '本当に削除していいですか？' }  %></td>
