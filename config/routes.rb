@@ -3,9 +3,6 @@ Rails.application.routes.draw do
     collection do
       post :confirm
     end
-  end
-
-  resources :posts do
     resources :favorites, only: [:create, :destroy]
   end
 
@@ -14,7 +11,7 @@ Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
   resources :sessions, only: [:new, :create, :destroy]
   resources :users 
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get '/new', to: 'controller#action'
 end
 
 
