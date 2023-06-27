@@ -20,7 +20,7 @@ class PostsController < ApplicationController
       render :new
     else
       if @post.save
-        PostMailer.confirmation_email(@post).deliver 
+        PostMailer.post_mail(@post).deliver 
         redirect_to posts_path, notice: "ポストされました！"
       else
         render :new

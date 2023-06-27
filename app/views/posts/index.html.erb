@@ -1,19 +1,14 @@
 <h1>ポスト一覧</h1>
 
-<p><%= notice %></p>
-
 <table>
   <tr>
     <th>投稿者</th>
     <th>内容</th>
-
     <th>画像</th>
   </tr>
 
 <% @posts.each do |post| %>
   <div class="post">
-    <h2><%= post.title %></h2>
-    <p><%= post.content %></p>
     <% if post.user == current_user %>
       <%= link_to "Edit", edit_post_path(post) %>
     <% end %>
