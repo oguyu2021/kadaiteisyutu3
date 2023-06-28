@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     unless @user == current_user
-      edirect_to pictures_path
+      redirect_to posts_path
     end
   end
 
