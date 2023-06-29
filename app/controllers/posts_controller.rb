@@ -53,8 +53,6 @@ class PostsController < ApplicationController
     render :new if @post.invalid?
   end
 
-  
-
   private
 
   def post_params
@@ -66,6 +64,6 @@ class PostsController < ApplicationController
   end
 
   def authorize_user
-    redirect_to root_path, alert: "Access denied." unless @post.user == current_user
+    redirect_to new_user_path, alert: "Access denied." unless @post.user == current_user
   end
 end
