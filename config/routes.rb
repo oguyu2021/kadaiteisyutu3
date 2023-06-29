@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :users 
   get 'new', to: 'controller#action'
+  root "posts#index"
 end
